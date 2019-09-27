@@ -1,13 +1,17 @@
 import inspect
 import json
 import logging
+from logging import handlers
 import os
+import sys
 
-from .targets import targets
+import graypy
 
-
-class LoggingException(Exception):
-    pass
+global_handlers = {'file': logging.FileHandler,
+                   'watch-file': handlers.WatchedFileHandler,
+                   'syslog': handlers.SysLogHandler,
+                   'http': handlers.HTTPHandler,
+                   'graylog': graypy.GELFUDPHandler}
 
 
 class Logger:
@@ -32,17 +36,16 @@ class Logger:
                     for target in rule['write-to']:
                         logger.addHandler(cls.targets[target])
 
-                    logger.setLevel(logging._nameToLevel(rule['min-level'].upper()))
+                    logger.setLevel(logging._nameToLevel[rule['min-level'].upper()])
 
                     return logger
 
         logger.setLevel(logging.INFO)
         return logger
 
-    # TODO: Add absolute path to project root + config file name
     @classmethod
     def __read_config_file(cls):
-        file_path = ''
+        file_path = os.path.join(os.path.dirname(sys.modules['__main__'].__file__), 'logging.cfg')
 
         if os.path.isfile(file_path):
             with open(file_path, 'r') as file:
@@ -64,8 +67,17 @@ class Logger:
     @classmethod
     def __prepare_targets(cls):
         for target in [target for target in cls.configuration['targets'] if target['_is_valid']]:
-            args = list(inspect.signature(targets[target['type']].__init__).parameters)[1:]
-            handler = targets[target['type']]()
+            parameters = inspect.signature(global_handlers[target['type']].__init__).parameters.items()
+            args = [arg[0] for arg in parameters if arg[1].default is inspect.Parameter.empty and arg[0] not in ['self', 'args', 'kwargs']]
+            mappings = {}
+
+            for arg in args:
+                mappings[arg] = target[arg]
+
+            for arg in [arg for arg in target.items() if arg[0] not in ['name', 'type', '_is_valid']]:
+                mappings[arg[0]] = arg[1]
+
+            handler = global_handlers[target['type']](**mappings)
             cls.targets[target['name']] = handler
 
 
@@ -81,16 +93,18 @@ class Logger:
                 continue
 
             # Validate rule min LEVEL
-            if not rule.get('min-level', False) or rule['min-level'] not in logging._nameToLevel.keys():
+            if not rule.get('min-level', False) or rule['min-level'].upper() not in logging._nameToLevel.keys():
                 cls.logger.warning('Invalid rule min LEVEL. Rule: %s', rule)
                 rule['_is_valid'] = False
                 continue
 
             # Validate write to
-            if not rule.get('write-tol', False) and not all(elem in rule['write-to'] for elem in cls.targets.keys()):
+            if not rule.get('write-to', False) and not all(elem in rule['write-to'].split(',') for elem in cls.targets.keys()):
                 cls.logger.warning('Invalid rule write to. Rule: %s', rule)
                 rule['_is_valid'] = False
                 continue
+            else:
+                rule['write-to'] = rule['write-to'].split(',')
 
     @classmethod
     def __validate_targets(cls):
@@ -109,13 +123,14 @@ class Logger:
                 continue
 
             # Validate target type
-            if not target.get('type', False) or target['type'] not in targets.keys():
+            if not target.get('type', False) or target['type'] not in global_handlers.keys():
                 cls.logger.warning('Invalid target type. Target: %s', target)
                 target['_is_valid'] = False
                 continue
 
             # Validate arguments
-            args = list(inspect.signature(targets[target['type']].__init__).parameters)[1:]
+            parameters = inspect.signature(global_handlers[target['type']].__init__).parameters.items()
+            args = [arg[0] for arg in parameters if arg[1].default is inspect.Parameter.empty and arg[0] not in ['self', 'args', 'kwargs']]
 
             for arg in args:
                 if not target.get(arg, False):
