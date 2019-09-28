@@ -15,9 +15,11 @@ install:
 - virtualenv --version
 - easy_install --version
 - pip --version
+- pip install pylint
 script:
 - pip install -r requirements.txt
 - pip install .
+- pylint PyLog/logger.py
 notifications:
   email:
     on_success: always
