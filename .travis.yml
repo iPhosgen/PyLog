@@ -1,55 +1,24 @@
 language: python
-
-stages:
-  - lint
-  - build
-  - deploy
+dist: xenial
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+  - "3.7-dev"
+  - "3.8-dev"
+  - "nightly"
+  - "pypy3"
 
 install:
-  - pip install .
-
-jobs:
-  include:
-    - python: 3.6
-    - python: 3.7
-      dist: xenial
-    - python: "pypy3.5-5.10.0"
-    - stage: lint
-      name: "pylint"
-      python:
-        - 3.6
-      before_script: skip
-      script:
-        - python setup.py lint || exit $(($? & 35))
-      after_script: skip
-    - stage: build
-      name: "sdist"
-      python:
-        - 3.6
-      before_script: skip
-      script:
-        - python setup.py sdist
-      after_script: skip
-    - name: "bdist_wheel"
-      python:
-        - 3.6
-      install:
-        - pip install . wheel
-      before_script: skip
-      script:
-        - python setup.py bdist_wheel
-      after_script: skip
-    - stage: deploy
-      deploy:
-        python:
-          - 3.6
-        provider: pypi
-        user: iPhosgen
-        password:
-          secure: AgEIcHlwaS5vcmcCJDhkOThlM2U2LTk2NmItNGE1ZS1iMzI3LTYzOTY0YTY1YzgxYQACJXsicGVybWlzc2lvbnMiOiAidXNlciIsICJ2ZXJzaW9uIjogMX0AAAYgLRDTiLACKMYxWr-N7Hdl72VlP0wCh5Sd785T86Uwf-U
-
-        on:
-          tags: true
-          branch: master
-          repo: iPhosgen/PyLog
-        distributions: "sdist bdist_wheel"
+- pip install -U setuptools
+- virtualenv --version
+- easy_install --version
+- pip --version
+script:
+- pip install -r requirements.txt
+- pip install .
+notifications:
+  email:
+    on_success: always
+    on_failure: always
