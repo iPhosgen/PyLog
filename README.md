@@ -7,7 +7,7 @@ Epylog provides to send log data to different sources e.g. file, rsyslog, graylo
 
 Use different loggers for different needs and manage it from one place.
 
-[![build status](https://travis-ci.org/iPhosgen/epylog.svg?branch=master)](https://travis-ci.org/iPhosgen/epylog) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog?ref=badge_shield)[![PyPi status](https://img.shields.io/pypi/v/epylog)](https://pypi.python.org/pypi/epylog)
+[![build status](https://travis-ci.org/iPhosgen/epylog.svg?branch=master)](https://travis-ci.org/iPhosgen/epylog) [![PyPi status](https://img.shields.io/pypi/v/epylog)](https://pypi.python.org/pypi/epylog) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog?ref=badge_shield)
 
 ## Installation
 
