@@ -7,7 +7,7 @@ Epylog provides to send log data to different sources e.g. file, rsyslog, graylo
 
 Use different loggers for different needs and manage it from one place.
 
-[![build status](https://travis-ci.org/iPhosgen/epylog.svg?branch=master)](https://travis-ci.org/iPhosgen/epylog) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog?ref=badge_shield)[![PyPi status](https://img.shields.io/pypi/v/epylog)](https://pypi.python.org/pypi/epylog)
+[![build status](https://travis-ci.org/iPhosgen/epylog.svg?branch=master)](https://travis-ci.org/iPhosgen/epylog) [![PyPi status](https://img.shields.io/pypi/v/epylog)](https://pypi.python.org/pypi/epylog) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog?ref=badge_shield)
 
 ## Installation
 
@@ -61,16 +61,16 @@ pip install epylog
     }
     ```
 - Finally call `getLogger` function to initialize your logger:
-```python
-from epylog import Logger
+    ```python
+    from epylog import Logger
 
-# put some code here
+    # put some code here
 
-logger = Logger.getLogger('my_test_logger')
-logger.info('Hello from %s', logger.name)
-```
+    logger = Logger.getLogger('my_test_logger')
+    logger.info('Hello from %s', logger.name)
+    ```
 - Enjoy sending your logs everywhere
 
 ## License
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog?ref=badge_large)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog?ref=badge_large)
