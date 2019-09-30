@@ -1,4 +1,6 @@
 # PyLog
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog?ref=badge_shield)
+
 Just another one Python logging package
 
 ## Description
@@ -58,3 +60,6 @@ PyLog supports sending logs to different way like a Graylog, rsyslog, file or HT
     logger = Logger.getLogger('logger-name')
     ```
 - Enjoy sending your logs everywhere
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FiPhosgen%2Fepylog?ref=badge_large)
