@@ -26,6 +26,8 @@ class Logger:
 
     @classmethod
     def getLogger(cls, name):
+        """Returns Logger object with specified settings"""
+
         logger = logging.getLogger(name)
 
         if not cls.configuration:
@@ -66,7 +68,6 @@ class Logger:
             cls.logger.error('Configuration file not found')
             cls.configuration['_is_valid'] = False
 
-    # TODO: Add arguments filling
     @classmethod
     def __prepare_targets(cls):
         for target in [target for target in cls.configuration['targets'] if target['_is_valid']]:
@@ -106,8 +107,7 @@ class Logger:
                 cls.logger.warning('Invalid rule write to. Rule: %s', rule)
                 rule['_is_valid'] = False
                 continue
-            else:
-                rule['write-to'] = rule['write-to'].split(',')
+            rule['write-to'] = rule['write-to'].split(',')
 
     @classmethod
     def __validate_targets(cls):
