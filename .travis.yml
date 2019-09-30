@@ -1,13 +1,7 @@
 language: python
 dist: xenial
 python:
-  - "3.5"
-  - "3.6"
   - "3.7"
-  - "3.7-dev"
-  - "3.8-dev"
-  - "nightly"
-  - "pypy3"
 
 install:
 - pip install -U setuptools
@@ -21,7 +15,8 @@ deploy:
   provider: pypi
   on:
     branch: master
-  distributions: sdist bdist_wheel
+    repo: iPhosgen/epylog
+  distributions: "sdist bdist_wheel"
   skip_existing: true
   user: iPhosgen
   password:
