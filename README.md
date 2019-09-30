@@ -61,14 +61,14 @@ pip install epylog
     }
     ```
 - Finally call `getLogger` function to initialize your logger:
-```python
-from epylog import Logger
+    ```python
+    from epylog import Logger
 
-# put some code here
+    # put some code here
 
-logger = Logger.getLogger('my_test_logger')
-logger.info('Hello from %s', logger.name)
-```
+    logger = Logger.getLogger('my_test_logger')
+    logger.info('Hello from %s', logger.name)
+    ```
 - Enjoy sending your logs everywhere
 
 ## License
