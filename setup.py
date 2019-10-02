@@ -1,12 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
+from os import path, environ
 from setuptools import setup, find_packages
+
+def read_long_description():
+    this_directory = path.abspath(path.dirname(__file__))
+    with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
+        long_description = f.read()
+        return long_description
+    
 
 setup(
     name='epylog',
-    version='0.1.%s' % os.environ.get('TRAVIS_BUILD_NUMBER', 0),
+    version='0.1.%s' % environ.get('TRAVIS_BUILD_NUMBER', 0),
     description="Just another one Python logging package.",
+    long_description=read_long_description(),
+    long_description_content_type='text/markdown',
     keywords='logging',
     author='Alexey Morozov',
     author_email='iphosgen@gmail.com',
