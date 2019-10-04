@@ -50,12 +50,14 @@ pip install epylog
           {
             "name": "my_test_*",
              "level": "info",
-              "write-to": "fl, gl"
+             "write-to": "fl, gl",
+             "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
           },
           {
             "name": "*",
              "level": "warning",
-              "write-to": "rsl"
+             "write-to": "rsl",
+             "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
           }
       ]
     }
