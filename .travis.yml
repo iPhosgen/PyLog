@@ -1,13 +1,7 @@
 language: python
 dist: xenial
 python:
-  - "3.5"
-  - "3.6"
   - "3.7"
-  - "3.7-dev"
-  - "3.8-dev"
-  - "nightly"
-  - "pypy3"
 
 install:
 - pip install -U setuptools
@@ -19,9 +13,14 @@ script:
 - pip install .
 deploy:
   provider: pypi
-  user: "iPhosgen"
+  on:
+    branch: master
+    repo: iPhosgen/epylog
+  distributions: "sdist bdist_wheel"
+  skip_existing: true
+  user: iPhosgen
   password:
-    secure: "oVI4Z348/2mn6g8TdWqzCAjZUOT6Qz117qcRaa1mUp2ivYxac78pMnMMer7qmCeoJqg2sr9L8YAt3e4iOJDi0Lhzd6c729ulOSvyhDcfjTWmtPqG0PJDuIXyQ6fxPtWe3iLVeYSe0zDx9XWF4deL4rGJidI4N/iofG/DY4pBe0xqr33uh97jvlMAt9XxrfD09f76c6huufl5m0UbAD96upZjuJgow1tzg9Kf59JLXRoht1OTKwL3nlvoWOkHsc6t7Xv0duLKSyz8H2jfLXYOoCTgODnCWk0pG97vcIR9P5mw/OAjFxvJD2ZjIDysBrREYTLcHhEv4dYpDZs5DneYToz7xCkRnEC/OMxMl76f5tmMRGnFIDOENqnRXswD4jetpzs0pEvJonnYncMWDbs6hNDB1zl9XdYIUbPWYQa2w4OXQpKkldOOXJ4yd975wO1xGf0wZRh4nQSjC2lcxGHSFO+IagCaWP/E189pmViWnqHVe4lAGoUUTpi/sJ3FGGYdHyKWTJ74t6ounRUBo2NwnFZ7jUJur9KW1OoxFj9POuZJs+1oC6YrwOAzBAiFgRgbp55kf+7y6SoXnkkG4wXNMvFAgw3dviEpexqXuhHyCtYy5Bg2if1DhrHsHotTHh8Zf6X1aM1yoDfRQ6+0tgt95ZOvPG+nYyJztKs/nQWvpw4="
+    secure: hv/yxTSl7wEoORfI2kaIr+nDO0bCGiQu3jBSVkvWoR4+Q3s2poct7tSir/ufyPuBUr7k4qKKW7IPXhPi1SsoIu+GLv+PNlCuEFR74TEXmDfBiHqzpbfwuJwurB764Dy6Qv8Xfs7XK5tft5btXZxwbk6kB1DRFhqcPFd9T9jfVrkG4HmDIMjA4bRaFwjpBwm3wM+uWRAPswMFgNvJH7VNn0jd5/kw01NJLHx++tmA6W3x0s52uGq+mbYBuK+HQLF6+lR5ApYWMoti22J3clIh9ys6dn8kHzzdWl6khC1m+32JrUukVsnPhCwvCunw18Al/aMR5g5znYXw5GUdG097nLNjxWHNz2yJ0RWe0lei//TTNCZJtZ2RV2e48X1X5qUpq/BCXcYPLmFe9KnoNgWXSHODU5vzM6iML75pVBGQxywDuKQbjcK2jY7ESqqTdRs75nlq2cWc/S3Np/y+8DLVMnbLUTK+gtDpIxaoHOYp9O1c0r/yoCem/jwGFORGn8dJVT567fP4BAYdPi+klJZ01kf1FPFHbZZEyYWdvEvtcH4ogz9XB5VP3gThaQDHPbPMSgNt1opMCWKrwx6w0u+KM8ElnuJkOE5Ck9ifme8kviyJgh4qy81V2LtQacPViIGDNDPcwtGkdlyH+P1wE1LMvePVJRxj4KMdaDcFFe/NKAE=
 notifications:
   email:
     on_success: never
