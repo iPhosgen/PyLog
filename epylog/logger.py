@@ -39,7 +39,13 @@ class Logger:
                     logger.handlers.clear()
 
                     for target in rule['write-to']:
-                        logger.addHandler(cls.targets[target])
+                        handler = cls.targets[target]
+
+                        if rule.get('format', False):
+                            formatter = logging.Formatter(rule['format'])
+                            handler.setFormatter(formatter)
+
+                        logger.addHandler(handler)
 
                     logger.setLevel(logging._nameToLevel[rule['min-level'].upper()])
 
