@@ -34,6 +34,7 @@ class Logger:
             cls.__read_config_file()
 
         if cls.configuration['_is_valid']:
+            datefmt = "%Y-%m-%d,%H:%M:%S.%f"
             for rule in [rule for rule in cls.configuration['rules'] if rule['_is_valid']]:
                 if name.startswith(rule['name'].split('*')[0]):
                     logger.handlers.clear()
@@ -41,9 +42,15 @@ class Logger:
                     for target in rule['write-to']:
                         handler = cls.targets[target]
 
+                        formatter = {}
                         if rule.get('format', False):
-                            formatter = logging.Formatter(rule['format'])
-                            handler.setFormatter(formatter)
+                            formatter = logging.Formatter(rule['format'],
+                                                          datefmt=datefmt)
+                        else:
+                            formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s",
+                                                          datefmt=datefmt)
+
+                        handler.setFormatter(formatter)
 
                         logger.addHandler(handler)
 
