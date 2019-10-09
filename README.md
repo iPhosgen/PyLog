@@ -30,7 +30,7 @@ pip install epylog
           {
             "name": "fl",
             "type":  "file",
-            "filepath": "/var/log/my_log.log"
+            "filename": "/var/log/my_log.log"
           },
           {
             "name": "gl",
@@ -47,15 +47,15 @@ pip install epylog
           }
       ],
       "rules": [
-          {
+          {  
             "name": "my_test_*",
-             "level": "info",
-             "write-to": "fl, gl",
-             "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+            "min-level": "info",
+            "write-to": "fl, gl",
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
           },
-          {
+          {  
             "name": "*",
-             "level": "warning",
+             "min-level": "warning",
              "write-to": "rsl",
              "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
           }
@@ -72,6 +72,52 @@ pip install epylog
     logger.info('Hello from %s', logger.name)
     ```
 - Enjoy sending your logs everywhere
+
+## Configuration reference
+
+`logging.cfg` is a simple JSON object that descxribes all sources that you planning to use and associates loggers with this sources.
+
+### Targets
+
+*Tagrets* are sources where can you send your logs.
+
+```json
+...
+    {
+        "name": "fl",
+        "type":  "file",
+        ...
+    }
+...
+```
+
+Field | Description
+------------ | -------------
+name | Unique name of target
+type | Target type. Now availible `file`, `watch-file`, `syslog`, `http` and `graylog` target types
+other fields | Other fields associated with specific target e.g. `filename`, `host`, `facility`, etc.
+
+### Rules
+
+*Rules* are patterns for associating user loggers with specific configuration.
+
+```json
+...
+    {  
+      "name": "my_test_*",
+      "min-level": "info",
+      "write-to": "fl, gl",
+      "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    }
+...
+```
+
+Field | Description
+------------ | -------------
+name | Unique name(s) of logger given by `getLogger` method. Use `*` wildcard for applying same settings for group of loggers
+min-level | Minimum logging level
+write-to | Target names splitted by comma without whitespases that will be asociated with this logger(s)
+format | Log line [format](https://docs.python.org/3/library/logging.html#formatter-objects)
 
 ## License
 
