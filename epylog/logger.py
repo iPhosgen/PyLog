@@ -34,7 +34,7 @@ class Logger:
             cls.__read_config_file()
 
         if cls.configuration['_is_valid']:
-            datefmt = "%Y-%m-%d,%H:%M:%S.%f"
+            datefmt = "%Y-%m-%d,%H:%M:%S"
             for rule in [rule for rule in cls.configuration['rules'] if rule['_is_valid']]:
                 if name.startswith(rule['name'].split('*')[0]):
                     logger.handlers.clear()
